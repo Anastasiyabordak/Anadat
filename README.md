@@ -1,2 +1,2 @@
 # Anadat
-Project for data analys
+Project for data analysis
