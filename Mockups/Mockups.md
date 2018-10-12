@@ -6,7 +6,7 @@
 
 Начальное окно. Image - обработка изображения, SQL - обработка таблиц SQL
 
-![https://github.com/Anastasiyabordak/Anadat/blob/master/Mockups/Pictures/Main.png](attachment:Main.png)
+![Main.png](https://github.com/Anastasiyabordak/Anadat/blob/master/Mockups/Pictures/Main.png)
 
 Начальное окно обработки изображения
 
