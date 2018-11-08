@@ -22,18 +22,18 @@
       			1.2.5.1 [Поток событий](#1.2.5.1) <br>
       			1.2.5.2 [Диаграмма активностей](#1.2.5.2) <br>
       			1.2.5.3 [Диаграмма последовательности](#1.2.5.3) <br>
-		1.2.4 [Сохранение изображения](#1.2.4) <br>
-      			1.2.4.1 [Поток событий](#1.2.4.1) <br>
-      			1.2.4.2 [Диаграмма активностей](#1.2.4.2) <br>
-      			1.2.4.3 [Диаграмма последовательности](#1.2.4.3) <br>
-		1.2.4 [Сохранение изображения](#1.2.4) <br>
-      			1.2.4.1 [Поток событий](#1.2.4.1) <br>
-      			1.2.4.2 [Диаграмма активностей](#1.2.4.2) <br>
-      			1.2.4.3 [Диаграмма последовательности](#1.2.4.3) <br>
-		1.2.4 [Сохранение изображения](#1.2.4) <br>
-      			1.2.4.1 [Поток событий](#1.2.4.1) <br>
-      			1.2.4.2 [Диаграмма активностей](#1.2.4.2) <br>
-      			1.2.4.3 [Диаграмма последовательности](#1.2.4.3) <br>
+		1.2.6 [Изменение RGB](#1.2.6) <br>
+      			1.2.6.1 [Поток событий](#1.2.6.1) <br>
+      			1.2.6.2 [Диаграмма активностей](#1.2.6.2) <br>
+      			1.2.6.3 [Диаграмма последовательности](#1.2.6.3) <br>
+		1.2.7 [Подключеие к базе данных](#1.2.7) <br>
+      			1.2.7.1 [Поток событий](#1.2.7.1) <br>
+      			1.2.7.2 [Диаграмма активностей](#1.2.7.2) <br>
+      			1.2.7.3 [Диаграмма последовательности](#1.2.7.3) <br>
+		1.2.8 [Создание графиков](#1.2.8) <br>
+      			1.2.8.1 [Поток событий](#1.2.8.1) <br>
+      			1.2.8.2 [Диаграмма активностей](#1.2.8.2) <br>
+      			1.2.8.3 [Диаграмма последовательности](#1.2.8.3) <br>
  # 1. Диаграммы использования <a name = "1"></a>
  ![Artist.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Artist.jpg)
  ![Database%20lover.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Database%20lover.jpg)
@@ -78,6 +78,29 @@ Database lover| Пользователь, которому нужно обраб
 ### 1.2.5 Изменение фона изображения <a name = "1.2.5"></a>
 #### 1.2.5.1 Поток событий <a name = "1.2.5.1"></a>
 #### 1.2.5.2 Диаграмма активностей <a name = "1.2.5.2"></a>
-![Set%20background.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Artist/Set%20background.jpg)
+![Set%20background.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Activity/Artist/Set%20background.jpg)
 #### 1.2.5.3 Диаграмма последовательностей <a name = "1.2.5.3"></a>
 ![Set%20background.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Artist/Set%20background.jpg)
+
+
+### 1.2.6 Изменение RGB <a name = "1.2.6"></a>
+#### 1.2.6.1 Поток событий <a name = "1.2.6.1"></a>
+#### 1.2.6.2 Диаграмма активностей <a name = "1.2.6.2"></a>
+![RGB.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Activity/Artist/RGB.jpg)
+#### 1.2.6.3 Диаграмма последовательностей <a name = "1.2.6.3"></a>
+![RGB.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Artist/RGB.jpg)
+
+
+### 1.2.7 Подключение к базе данных <a name = "1.2.7"></a>
+#### 1.2.7.1 Поток событий <a name = "1.2.7.1"></a>
+#### 1.2.7.2 Диаграмма активностей <a name = "1.2.7.2"></a>
+![Database%20connection.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Activity/Database%20lover/Database%20connection.jpg)
+#### 1.2.7.3 Диаграмма последовательностей <a name = "1.2.7.3"></a>
+![Database%20connection.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Database%20lover/Database%20connection.jpg)
+
+### 1.2.8 Создание графиков <a name = "1.2.8"></a>
+#### 1.2.8.1 Поток событий <a name = "1.2.8.1"></a>
+#### 1.2.8.2 Диаграмма активностей <a name = "1.2.8.2"></a>
+![Chart%20create.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Activity/Database%20lover/Chart%20create.jpg)
+#### 1.2.8.3 Диаграмма последовательностей <a name = "1.2.8.3"></a>
+![Chart%20create.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Database%20lover/Chart%20create.jpg)
