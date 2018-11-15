@@ -10,7 +10,9 @@
 		1.2.6 [Изменение RGB](#1.2.6) <br>
 		1.2.7 [Подключеие к базе данных](#1.2.7) <br>
 		1.2.8 [Создание графиков](#1.2.8) <br>
-      			
+2. [Диаграмма классов](#2) <br>  
+3. [Диаграмма компонентов](#3) <br>  
+
  # 1. Диаграммы использования <a name = "1"></a>
  ![Artist.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Artist.jpg)
  ![Database%20lover.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Database%20lover.jpg)
@@ -180,3 +182,9 @@ Database lover| Пользователь, которому нужно обраб
 ![Chart%20create.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Activity/Database%20lover/Chart%20create.jpg)
 #### 1.2.8.3 Диаграмма последовательностей <a name = "1.2.8.3"></a>
 ![Chart%20create.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Sequence/Database%20lover/Chart%20create.jpg)
+
+ # 2. Диаграмма классов <a name = "2"></a>
+ ![Class.jpg]( https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Class.jpg)
+ # 3. Диаграмма компонентов <a name = "3"></a>
+ ![Deployment.jpg]( https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Deployment.jpg)
+
