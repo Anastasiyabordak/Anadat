@@ -11,8 +11,8 @@
 		1.2.7 [Подключеие к базе данных](#1.2.7) <br>
 		1.2.8 [Создание графиков](#1.2.8) <br>
 2. [Диаграмма классов](#2) <br>  
-3. [Диаграмма компонентов](#3) <br>  
-
+3. [Диаграмма развёртывания](#3) <br>  
+4. [Диаграммы состояний](#4) <br> 
  # 1. Диаграммы использования <a name = "1"></a>
  ![Artist.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Artist.jpg)
  ![Database%20lover.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Use%20case/Database%20lover.jpg)
@@ -185,6 +185,12 @@ Database lover| Пользователь, которому нужно обраб
 
  # 2. Диаграмма классов <a name = "2"></a>
  ![Class.jpg]( https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Class.jpg)
- # 3. Диаграмма компонентов <a name = "3"></a>
+ # 3. Диаграмма развёртывания <a name = "3"></a>
  ![Deployment.jpg]( https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/Deployment.jpg)
-
+ # 4. Диаграммы состояний <a name = "4"></a>
+ ## 4.1 Копирование изображеия <a name = "4.1"></a> 
+ ![Copy.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Copy.jpg)
+ ## 4.2 Выбор обработки изображеия или построения графика <a name = "4.2"></a> 
+ ![Initial.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Initial.jpg)
+ ## 4.3 Изменение RGB <a name = "4.3"></a> 
+ ![RGB.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/RGB.jpg)
