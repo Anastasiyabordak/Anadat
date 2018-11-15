@@ -194,3 +194,11 @@ Database lover| Пользователь, которому нужно обраб
  ![Initial.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Initial.jpg)
  ## 4.3 Изменение RGB <a name = "4.3"></a> 
  ![RGB.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/RGB.jpg)
+ ## 4.4 Redo <a name = "4.4"></a> 
+ ![Redo.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Redo.jpg)
+ ## 4.5 Undo <a name = "4.5"></a> 
+ ![Undo.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Undo.jpg)
+ ## 4.6 Построение графика <a name = "4.6"></a> 
+ ![SQL.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/SQL.jpg)
+ ## 4.7 Сохранение результата <a name = "4.7"></a> 
+ ![Save.jpg](https://github.com/Anastasiyabordak/Anadat/blob/master/Diagram/State/Save.jpg)
