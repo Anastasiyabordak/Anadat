@@ -1,8 +1,9 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
-from PyQt5.QtWidgets import  QFileDialog
+from PyQt5.QtWidgets import QFileDialog
 from ImageWindow import ImageWindow
+
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -14,14 +15,18 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi("GUI/startPage.ui", self)
         self.imageButton.clicked.connect(self.showImageWindow)
         self.show()
-        self.setFixedSize(210,210)
-
+        self.setFixedSize(210, 210)
 
     def showImageWindow(self):
-        global  image_ui
+        global image_ui
         image_ui = ImageWindow(ex)
         image_ui.show()
         self.close()
+
+    def showLoginWindow(self):
+        # TODO add loginWindow
+        pass
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
