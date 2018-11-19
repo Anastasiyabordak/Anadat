@@ -1,12 +1,12 @@
 from PyQt5 import QtWidgets
 from PyQt5 import uic
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QColorDialog
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 import numpy as np
 from scipy import misc
-import  operator
+import operator
 import matplotlib.pyplot as plt
 
 
@@ -22,58 +22,72 @@ class ImageWindow(QtWidgets.QMainWindow):
 
     def initUI(self):
         uic.loadUi("GUI/image.ui", self)
-        operations = ['>=', '<=','=', '<', '>']
+        operations = ['>=', '<=', '=', '<', '>']
         self.greenOperation.addItems(operations)
         self.blueOperation.addItems(operations)
         self.redOperation.addItems(operations)
+        self.colorButton.setStyleSheet("background-color: black");
         self.backButton.clicked.connect(self.showMainWindow)
         self.openButton.clicked.connect(self.openImage)
-        self.show()
         self.redEnter.valueChanged.connect(self.RGBchange)
         self.blueEnter.valueChanged.connect(self.RGBchange)
         self.greenEnter.valueChanged.connect(self.RGBchange)
         self.redOperation.currentIndexChanged.connect(self.RGBchange)
         self.blueOperation.currentIndexChanged.connect(self.RGBchange)
         self.greenOperation.currentIndexChanged.connect(self.RGBchange)
+        self.colorButton.clicked.connect(self.changeColor)
+        self.show()
         self.setFixedSize(882, 687)
 
-# changing all RGB
+    # changing background Color
+    def changeColor(self):
+        # TODO change main color
+        # TODO add to snapshot
+        color = QColorDialog.getColor()
+        rgb = (color.red(), color.green(), color.blue())
+        self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+
+    # changing all RGB
     def RGBchange(self):
         # TODO check image is open
+        # TODO add to snapshot
+        # TODO change color
+
         # process red
         if self.redOperation.currentText() == "<":
-            self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = 0
-        elif self.redOperation.currentText() == ">":
             self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = 0
+        elif self.redOperation.currentText() == ">":
+            self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = 0
         elif self.redOperation.currentText() == ">=":
-            self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = 0
-        elif self.redOperation.currentText() == "<=":
             self.imageValue[self.imageValue[:, :, 0] <= self.redEnter.value()] = 0
+        elif self.redOperation.currentText() == "<=":
+            self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = 0
         else:
             self.imageValue[self.imageValue[:, :, 0] == self.redEnter.value()] = 0
         # process green
         if self.greenOperation.currentText() == "<":
-            self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = 0
-        elif self.greenOperation.currentText() == ">":
             self.imageValue[self.imageValue[:, :, 1] > self.greenEnter.value()] = 0
+        elif self.greenOperation.currentText() == ">":
+            self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = 0
         elif self.greenOperation.currentText() == ">=":
-            self.imageValue[self.imageValue[:, :, 1] >= self.greenEnter.value()] = 0
-        elif self.greenOperation.currentText() == "<=":
             self.imageValue[self.imageValue[:, :, 1] <= self.greenEnter.value()] = 0
+        elif self.greenOperation.currentText() == "<=":
+            self.imageValue[self.imageValue[:, :, 1] == self.greenEnter.value()] = 0
         else:
             self.imageValue[self.imageValue[:, :, 1] == self.greenEnter.value()] = 0
         # process blue
         if self.blueOperation.currentText() == "<":
-            self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = 0
-        elif self.blueOperation.currentText() == ">":
             self.imageValue[self.imageValue[:, :, 2] > self.blueEnter.value()] = 0
+        elif self.blueOperation.currentText() == ">":
+            self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = 0
         elif self.blueOperation.currentText() == ">=":
-            self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = 0
-        elif self.blueOperation.currentText() == "<=":
             self.imageValue[self.imageValue[:, :, 2] <= self.blueEnter.value()] = 0
+        elif self.blueOperation.currentText() == "<=":
+            self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = 0
         else:
             self.imageValue[self.imageValue[:, :, 2] == self.blueEnter.value()] = 0
         self.setImage()
+
     # Method for changing image in GUI
     def setImage(self):
         print(self.imageValue.shape)
@@ -94,6 +108,7 @@ class ImageWindow(QtWidgets.QMainWindow):
     def openImage(self):
 
         # TODO if image is already opened ask: continue or pass
+        # TODO new image - clean rgb
 
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
