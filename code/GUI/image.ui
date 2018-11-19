@@ -358,7 +358,7 @@
    <widget class="QSpinBox" name="redEnter">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>210</x>
       <y>10</y>
       <width>71</width>
       <height>31</height>
@@ -396,13 +396,13 @@
      <number>255</number>
     </property>
     <property name="value">
-     <number>255</number>
+     <number>0</number>
     </property>
    </widget>
    <widget class="QSpinBox" name="greenEnter">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>210</x>
       <y>50</y>
       <width>71</width>
       <height>31</height>
@@ -440,13 +440,13 @@
      <number>255</number>
     </property>
     <property name="value">
-     <number>255</number>
+     <number>0</number>
     </property>
    </widget>
    <widget class="QSpinBox" name="blueEnter">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>210</x>
       <y>90</y>
       <width>71</width>
       <height>31</height>
@@ -484,7 +484,7 @@
      <number>255</number>
     </property>
     <property name="value">
-     <number>255</number>
+     <number>0</number>
     </property>
    </widget>
    <widget class="QComboBox" name="redOperation">
@@ -492,7 +492,7 @@
      <rect>
       <x>90</x>
       <y>10</y>
-      <width>51</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
@@ -515,7 +515,7 @@
      <rect>
       <x>90</x>
       <y>50</y>
-      <width>51</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
@@ -538,7 +538,7 @@
      <rect>
       <x>90</x>
       <y>90</y>
-      <width>51</width>
+      <width>71</width>
       <height>31</height>
      </rect>
     </property>
