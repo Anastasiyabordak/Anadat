@@ -1,6 +1,7 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
+from PyQt5.QtWidgets import  QFileDialog
 from ImageWindow import ImageWindow
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -10,7 +11,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initUI()
 
     def initUI(self):
-        uic.loadUi("startPage.ui", self)
+        uic.loadUi("GUI/startPage.ui", self)
         self.imageButton.clicked.connect(self.showImageWindow)
         self.show()
         self.setFixedSize(210,210)
