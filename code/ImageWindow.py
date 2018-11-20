@@ -44,6 +44,7 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.colorButton.clicked.connect(self.changeColor)
         self.saveButton.clicked.connect(self.saveImage)
         self.undoButton.clicked.connect(self.undo)
+        self.redoButton.clicked.connect(self.redo)
         self.copyButton.clicked.connect(self.copyClipboard)
         self.show()
         self.setFixedSize(882, 687)
@@ -53,8 +54,36 @@ class ImageWindow(QtWidgets.QMainWindow):
         qImg = QtGui.QImage(self.imageValue.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         QApplication.clipboard().setImage(qImg)
         pass
-    def undo(self):
+    def redo(self):
+        print("REDO")
         print(self.imageStatus.currentIndex)
+        print(len(self.imageStatus.snapshots))
+        if self.imageStatus.setRedo() == True:
+            temp = self.imageStatus.getRGB()
+            self.flag = True
+            self.redEnter.setValue(temp[0])
+            self.blueEnter.setValue(temp[1])
+            self.greenEnter.setValue(temp[2])
+            self.blueOperation.setCurrentIndex(self.operations.index(temp[3]))
+            self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
+            self.redOperation.setCurrentIndex(self.operations.index(temp[5]))
+            self.flag = False
+            self.RGBchange()
+            self.setImage()
+            self.imageStatus.removeDub()            
+            self.imageStatus.currentIndex = self.imageStatus.currentIndex - 1
+            rgb = self.imageStatus.getColor()
+            self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+        else:
+            # TODO add message Box
+            print("Unable")
+        print("REDO")
+        print(self.imageStatus.currentIndex)
+        print(len(self.imageStatus.snapshots))
+    def undo(self):
+        print("UNDO")
+        print(self.imageStatus.currentIndex)
+        print(len(self.imageStatus.snapshots))
         if self.imageStatus.setUndo() == True:
             if self.imageStatus.currentIndex == 0:
                 self.imageValue = []
@@ -67,7 +96,6 @@ class ImageWindow(QtWidgets.QMainWindow):
                 self.redOperation.setCurrentIndex(0)
                 self.colorButton.setStyleSheet("background-color: black")
             else:
-                print("After0", self.imageStatus.currentIndex)
                 temp = self.imageStatus.getRGB()
                 self.flag = True
                 self.redEnter.setValue(temp[0])
@@ -79,15 +107,16 @@ class ImageWindow(QtWidgets.QMainWindow):
                 self.flag = False
                 self.RGBchange()
                 self.setImage()
-                self.imageStatus.removeDub()
+                #self.imageStatus.removeDub()
+                self.imageStatus.currentIndex = self.imageStatus.currentIndex - 1
                 rgb = self.imageStatus.getColor()
                 self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
-                print("After", self.imageStatus.currentIndex)
-
         else:
             # TODO add message Box
             print("Unable")
-
+        print("UNDO a")
+        print(self.imageStatus.currentIndex)
+        print(len(self.imageStatus.snapshots))
     # saving image
     def saveImage(self):
         if len(self.imageValue) == 0:
@@ -118,10 +147,10 @@ class ImageWindow(QtWidgets.QMainWindow):
         rgb = (color.red(), color.green(), color.blue())
         self.imageStatus.addSnapshotColor(rgb)
         self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
-
+    
     # changing all RGB
     def RGBchange(self):
-        if self.flag == False:
+        if self.flag == False or self.flag == True:
             self.imageValue = np.copy(self.imageStatus.getImage())
             if len(self.imageValue) == 0:
                 msg = QMessageBox()
@@ -136,7 +165,8 @@ class ImageWindow(QtWidgets.QMainWindow):
                     pass
                 pass
             else:
-                self.imageStatus.addSnapshotRGB([
+                if self.flag == False:
+                    self.imageStatus.addSnapshotRGB([
                     self.redEnter.value(),
                     self.greenEnter.value(),
                     self.blueEnter.value()

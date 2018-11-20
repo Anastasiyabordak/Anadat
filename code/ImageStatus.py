@@ -55,8 +55,11 @@ class ImageStatus:
             return True
 
     def setRedo(self):
-        if (len(self.snapshots)) != 0:
+        if self.currentIndex < len(self.snapshots) - 1:
             self.currentIndex = self.currentIndex + 1
+            return True
+        else:            
+            return False
+
     def removeDub(self):
         self.snapshots = self.snapshots[:self.currentIndex]
-        self.currentIndex = self.currentIndex - 1
