@@ -13,4 +13,15 @@ class ImageStatus:
         self.snapshots.append(new)
         self.currentIndex = self.currentIndex + 1
 
+    def addSnapshotColor(self, color):
+        # Todo IF next exsists  - delete ALL next
+        new = Snapshot()
+        new.myCopy(self.snapshots[self.currentIndex])
+        new.setColor(color)
+        self.snapshots.append(new)
+        self.currentIndex = self.currentIndex + 1
+
+    def getColor(self):
+        return self.snapshots[self.currentIndex].color
+
 

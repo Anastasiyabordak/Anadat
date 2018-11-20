@@ -21,3 +21,4 @@ class Snapshot:
         self.rgb.redOperation  = value.rgb.redOperation
         self.rgb.greenOperation = value.rgb.greenOperation
         self.rgb.blueOperation = value.rgb.blueOperation
+        self.color = value.color

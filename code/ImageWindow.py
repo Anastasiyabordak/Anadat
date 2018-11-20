@@ -18,7 +18,6 @@ class ImageWindow(QtWidgets.QMainWindow):
         # image in RGB888
         self.imageStatus = ImageStatus()
         self.imageValue = []
-        self.rgb = [0,0,0]
         self.initUI()
         self.mainWindow = mainWindow
 
@@ -64,17 +63,14 @@ class ImageWindow(QtWidgets.QMainWindow):
 
     # changing background Color
     def changeColor(self):
-        # TODO change main color
-        # TODO add to snapshot
         color = QColorDialog.getColor()
-        prev = self.rgb
-        self.rgb = (color.red(), color.green(), color.blue())
-        self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % self.rgb)
+        rgb = (color.red(), color.green(), color.blue())
+        self.imageStatus.addSnapshotColor(rgb)
+        self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
         self.setImage()
 
     # changing all RGB
     def RGBchange(self):
-        # TODO add to snapshot
         # TODO change color
         if len(self.imageValue) == 0:
             msg = QMessageBox()
@@ -101,37 +97,37 @@ class ImageWindow(QtWidgets.QMainWindow):
                 ])
             # process red
             if self.redOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = self.imageStatus.getColor()
             elif self.redOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = self.imageStatus.getColor()
             elif self.redOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 0] <= self.redEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 0] <= self.redEnter.value()] = self.imageStatus.getColor()
             elif self.redOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = self.imageStatus.getColor()
             else:
-                self.imageValue[self.imageValue[:, :, 0] != self.redEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 0] != self.redEnter.value()] = self.imageStatus.getColor()
             # process green
             if self.greenOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 1] > self.greenEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 1] > self.greenEnter.value()] = self.imageStatus.getColor()
             elif self.greenOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = self.imageStatus.getColor()
             elif self.greenOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 1] <= self.greenEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 1] <= self.greenEnter.value()] = self.imageStatus.getColor()
             elif self.greenOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 1] >= self.greenEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 1] >= self.greenEnter.value()] = self.imageStatus.getColor()
             else:
-                self.imageValue[self.imageValue[:, :, 1] != self.greenEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 1] != self.greenEnter.value()] = self.imageStatus.getColor()
             # process blue
             if self.blueOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 2] > self.blueEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 2] > self.blueEnter.value()] = self.imageStatus.getColor()
             elif self.blueOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = self.imageStatus.getColor()
             elif self.blueOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 2] <= self.blueEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 2] <= self.blueEnter.value()] = self.imageStatus.getColor()
             elif self.blueOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = self.imageStatus.getColor()
             else:
-                self.imageValue[self.imageValue[:, :, 2] != self.blueEnter.value()] = self.rgb
+                self.imageValue[self.imageValue[:, :, 2] != self.blueEnter.value()] = self.imageStatus.getColor()
             self.setImage()
 
     # Method for changing image in GUI
