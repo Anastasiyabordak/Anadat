@@ -76,16 +76,6 @@ class ImageWindow(QtWidgets.QMainWindow):
     def RGBchange(self):
         # TODO add to snapshot
         # TODO change color
-        self.imageStatus.addSnapshot([
-                                        self.redEnter.value(),
-                                        self.greenEnter.value(),
-                                        self.blueEnter.value()
-                                     ],
-                                     [
-                                         self.redOperation.currentText(),
-                                         self.greenOperation.currentText(),
-                                         self.blueOperation.currentText()
-                                     ])
         if len(self.imageValue) == 0:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -99,6 +89,16 @@ class ImageWindow(QtWidgets.QMainWindow):
                 pass
             pass
         else:
+            self.imageStatus.addSnapshotRGB([
+                self.redEnter.value(),
+                self.greenEnter.value(),
+                self.blueEnter.value()
+            ],
+                [
+                    self.redOperation.currentText(),
+                    self.greenOperation.currentText(),
+                    self.blueOperation.currentText()
+                ])
             # process red
             if self.redOperation.currentText() == "<":
                 self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = self.rgb
