@@ -34,8 +34,28 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.openButton.clicked.connect(self.openImage)
         self.setRGB.clicked.connect(self.RGBchange)
         self.colorButton.clicked.connect(self.changeColor)
+        self.saveButton.clicked.connect(self.saveImage)
         self.show()
         self.setFixedSize(882, 687)
+
+    # saving image
+    def saveImage(self):
+        if len(self.imageValue) == 0:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Image window is empty, open image first")
+            msg.setWindowTitle("Saving error")
+            msg.setStandardButtons(QMessageBox.Ok, QMessageBox.Cancel)
+            retval = msg.exec_()
+            if retval == QMessageBox.Ok:
+                self.openImageLoop()
+            else:
+                pass
+        else:
+            fileName, _ = QFileDialog.getSaveFileName()
+            misc.imsave(fileName,self.imageValue)
+
+            pass
 
     # changing background Color
     def changeColor(self):
@@ -54,13 +74,12 @@ class ImageWindow(QtWidgets.QMainWindow):
             msg.setIcon(QMessageBox.Critical)
             msg.setText("Image window is empty, open image first")
             msg.setWindowTitle("RGB error")
-            msg.setStandardButtons(QMessageBox.Close )
+            msg.setStandardButtons(QMessageBox.Ok)
             retval = msg.exec_()
             if retval == QMessageBox.Ok:
                 self.openImageLoop()
             else:
                 pass
-
             pass
         else:
         # process red
@@ -125,6 +144,8 @@ class ImageWindow(QtWidgets.QMainWindow):
             msg.setStandardButtons(QMessageBox.Close | QMessageBox.Ok)
             retval = msg.exec_()
             if retval == QMessageBox.Ok:
+                # TODO new image - clean rgb
+                # TODO add to snapshot
                 self.openImageLoop()
             else:
                 pass
@@ -133,11 +154,12 @@ class ImageWindow(QtWidgets.QMainWindow):
     def openImageLoop(self):
 
 
-        # TODO new image - clean rgb
+
+
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "",
-                                                  "All Files (*);;Python Files (*.py)", options=options)
+        fileName, _ = QFileDialog.getOpenFileName(self, "Select dir", "",
+                                                  "All Files (*)", options=options)
         # checking is file an image
         if fileName.lower().endswith(('.png', '.jpg', '.jpeg')) == True and len(fileName) != 0:
             self.imageValue = misc.imread(fileName)
