@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets
+from PyQt5.Qt import QApplication
 from PyQt5 import uic
 from PyQt5.QtWidgets import QFileDialog, QMessageBox, QColorDialog
 from PyQt5.QtGui import QIcon, QPixmap
@@ -9,7 +10,6 @@ from scipy import misc
 import operator
 import matplotlib.pyplot as plt
 from ImageStatus import ImageStatus
-
 class ImageWindow(QtWidgets.QMainWindow):
 
     def __init__(self, mainWindow):
@@ -44,8 +44,15 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.colorButton.clicked.connect(self.changeColor)
         self.saveButton.clicked.connect(self.saveImage)
         self.undoButton.clicked.connect(self.undo)
+        self.copyButton.clicked.connect(self.copyClipboard)
         self.show()
         self.setFixedSize(882, 687)
+    def copyClipboard(self):
+        height, width, channels = self.imageValue.shape
+        bytesPerLine = channels * width
+        qImg = QtGui.QImage(self.imageValue.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
+        QApplication.clipboard().setImage(qImg)
+        pass
     def undo(self):
         print(self.imageStatus.currentIndex)
         if self.imageStatus.setUndo() == True:
@@ -182,6 +189,7 @@ class ImageWindow(QtWidgets.QMainWindow):
         pixmap = QPixmap(qImg)
         pixmap = pixmap.scaled(self.image.size(), QtCore.Qt.KeepAspectRatio)
         self.image.setPixmap(pixmap)
+        
 
     # Back to main
     def showMainWindow(self):
