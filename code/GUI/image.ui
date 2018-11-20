@@ -560,7 +560,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>190</y>
+      <y>140</y>
       <width>271</width>
       <height>51</height>
      </rect>
@@ -572,36 +572,11 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="setRGB">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>130</y>
-      <width>291</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Bitstream Charter</family>
-      <pointsize>18</pointsize>
-      <weight>50</weight>
-      <italic>true</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Show image with RGB filter</string>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QLabel" name="greenLabel_2">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>300</y>
+      <y>250</y>
       <width>291</width>
       <height>21</height>
      </rect>
@@ -621,7 +596,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>250</y>
+      <y>200</y>
       <width>61</width>
       <height>41</height>
      </rect>
