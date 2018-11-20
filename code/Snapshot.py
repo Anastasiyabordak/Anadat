@@ -5,8 +5,9 @@ class Snapshot:
     def __init__(self):
         self.rgb = RGB()
         self.color = [0,0,0]
+        self.originalImage = []
 
-    def setRGB(self, rgbValue, rgbOperation):
+    def setRGB(self, rgbValue=[0,0,0], rgbOperation=['>=', '>=', '>=']):
         self.rgb.setRGB(rgbValue, rgbOperation)
 
     def resetRGB(self):
@@ -22,3 +23,6 @@ class Snapshot:
         self.rgb.greenOperation = value.rgb.greenOperation
         self.rgb.blueOperation = value.rgb.blueOperation
         self.color = value.color
+        self.originalImage = value.originalImage
+    def setImage(self, value):
+        self.originalImage = value

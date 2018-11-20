@@ -22,9 +22,6 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.mainWindow = mainWindow
 
     def initUI(self):
-        # TODO add help button for RGB
-        # TODO add help button for color
-
         uic.loadUi("GUI/image.ui", self)
 
         operations = ['>=', '<=', '=', '<', '>']
@@ -67,11 +64,9 @@ class ImageWindow(QtWidgets.QMainWindow):
         rgb = (color.red(), color.green(), color.blue())
         self.imageStatus.addSnapshotColor(rgb)
         self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
-        self.setImage()
 
     # changing all RGB
     def RGBchange(self):
-        # TODO change color
         if len(self.imageValue) == 0:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -181,9 +176,17 @@ class ImageWindow(QtWidgets.QMainWindow):
                 msg.setStandardButtons(QMessageBox.No | QMessageBox.Ok)
                 retval = msg.exec_()
                 if retval == QMessageBox.Ok:
-                    #self.changeColor()
-                    print("reset RGB")
-                    # TODO add reset RGB
+                    self.imageStatus.addShanpshotImage(self.imageValue,True)
+                    self.redEnter.setValue(0)
+                    self.blueEnter.setValue(0)
+                    self.greenEnter.setValue(0)
+                    self.blueOperation.setCurrentIndex(0)
+                    self.greenOperation.setCurrentIndex(0)
+                    self.redOperation.setCurrentIndex(0)
+                    self.colorButton.setStyleSheet("background-color: black");
+                else:
+                    self.imageStatus.addShanpshotImage(self.imageValue, False)
+                    self.RGBchange()
             else:
                 self.imageValue = misc.imread(fileName)
             self.setImage()
