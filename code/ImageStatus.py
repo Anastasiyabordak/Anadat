@@ -34,7 +34,7 @@ class ImageStatus:
         new.setImage(image)
         if updateRGB == True:
             new.setRGB()
-            new.color = [0,0,0]
+            new.color = (0, 0, 0)
         self.snapshots.append(new)
         self.currentIndex = self.currentIndex + 1
 
@@ -43,3 +43,20 @@ class ImageStatus:
 
     def getImage(self):
         return self.snapshots[self.currentIndex].originalImage
+
+    def getRGB(self):
+        return self.snapshots[self.currentIndex].getRGB()
+
+    def setUndo(self):
+        if self.currentIndex == 0:
+            return False
+        else:
+            self.currentIndex = self.currentIndex - 1
+            return True
+
+    def setRedo(self):
+        if (len(self.snapshots)) != 0:
+            self.currentIndex = self.currentIndex + 1
+    def removeDub(self):
+        self.snapshots = self.snapshots[:self.currentIndex]
+        self.currentIndex = self.currentIndex - 1

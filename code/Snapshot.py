@@ -4,8 +4,8 @@ from RGB import RGB
 class Snapshot:
     def __init__(self):
         self.rgb = RGB()
-        self.color = [0,0,0]
-        self.originalImage = []
+        self.color = (0,0,0)
+        self.originalImage = ()
 
     def setRGB(self, rgbValue=[0,0,0], rgbOperation=['>=', '>=', '>=']):
         self.rgb.setRGB(rgbValue, rgbOperation)
@@ -13,7 +13,7 @@ class Snapshot:
     def resetRGB(self):
         self.rgb.setRGB()
 
-    def setColor(self, nColor = [0,0,0]):
+    def setColor(self, nColor = (0,0,0)):
         self.color = nColor
     def myCopy(self, value):
         self.rgb.redValue = value.rgb.redValue
@@ -26,3 +26,6 @@ class Snapshot:
         self.originalImage = value.originalImage
     def setImage(self, value):
         self.originalImage = value
+    def getRGB(self):
+        return [self.rgb.redValue, self.rgb.greenValue,self.rgb.blueValue,
+                self.rgb.redOperation, self.rgb.greenOperation, self.rgb.blueOperation]

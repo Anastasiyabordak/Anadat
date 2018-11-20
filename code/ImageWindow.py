@@ -16,19 +16,22 @@ class ImageWindow(QtWidgets.QMainWindow):
         super().__init__()
 
         # image in RGB888
+
         self.imageStatus = ImageStatus()
+        self.flag = False
         #image that displayed for user
         self.imageValue = []
         self.initUI()
         self.mainWindow = mainWindow
 
+
     def initUI(self):
         uic.loadUi("GUI/image.ui", self)
 
-        operations = ['>=', '<=', '=', '<', '>']
-        self.greenOperation.addItems(operations)
-        self.blueOperation.addItems(operations)
-        self.redOperation.addItems(operations)
+        self.operations = ['>=', '<=', '=', '<', '>']
+        self.greenOperation.addItems(self.operations)
+        self.blueOperation.addItems(self.operations)
+        self.redOperation.addItems(self.operations)
         self.colorButton.setStyleSheet("background-color: black");
         self.backButton.clicked.connect(self.showMainWindow)
         self.openButton.clicked.connect(self.openImage)
@@ -40,8 +43,43 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.greenOperation.currentIndexChanged.connect(self.RGBchange)
         self.colorButton.clicked.connect(self.changeColor)
         self.saveButton.clicked.connect(self.saveImage)
+        self.undoButton.clicked.connect(self.undo)
         self.show()
         self.setFixedSize(882, 687)
+    def undo(self):
+        print(self.imageStatus.currentIndex)
+        if self.imageStatus.setUndo() == True:
+            if self.imageStatus.currentIndex == 0:
+                self.imageValue = []
+                self.image.clear()
+                self.redEnter.setValue(0)
+                self.blueEnter.setValue(0)
+                self.greenEnter.setValue(0)
+                self.blueOperation.setCurrentIndex(0)
+                self.greenOperation.setCurrentIndex(0)
+                self.redOperation.setCurrentIndex(0)
+                self.colorButton.setStyleSheet("background-color: black")
+            else:
+                print("After0", self.imageStatus.currentIndex)
+                temp = self.imageStatus.getRGB()
+                self.flag = True
+                self.redEnter.setValue(temp[0])
+                self.blueEnter.setValue(temp[1])
+                self.greenEnter.setValue(temp[2])
+                self.blueOperation.setCurrentIndex(self.operations.index(temp[3]))
+                self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
+                self.redOperation.setCurrentIndex(self.operations.index(temp[5]))
+                self.flag = False
+                self.RGBchange()
+                self.setImage()
+                self.imageStatus.removeDub()
+                rgb = self.imageStatus.getColor()
+                self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+                print("After", self.imageStatus.currentIndex)
+
+        else:
+            # TODO add message Box
+            print("Unable")
 
     # saving image
     def saveImage(self):
@@ -60,7 +98,10 @@ class ImageWindow(QtWidgets.QMainWindow):
 
             fileName, _ = QFileDialog.getSaveFileName()
             if len(fileName) != 0:
-                misc.imsave(fileName, self.imageValue)
+                try:
+                    misc.imsave(fileName, self.imageValue)
+                except Exception as e:
+                    print(e)
 
             pass
 
@@ -73,64 +114,65 @@ class ImageWindow(QtWidgets.QMainWindow):
 
     # changing all RGB
     def RGBchange(self):
-        self.imageValue = self.imageStatus.getImage().copy()
-        if len(self.imageValue) == 0:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setText("Image window is empty, open image first")
-            msg.setWindowTitle("RGB error")
-            msg.setStandardButtons(QMessageBox.Ok)
-            retval = msg.exec_()
-            if retval == QMessageBox.Ok:
-                self.openImageLoop()
-            else:
+        if self.flag == False:
+            self.imageValue = np.copy(self.imageStatus.getImage())
+            if len(self.imageValue) == 0:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("Image window is empty, open image first")
+                msg.setWindowTitle("RGB error")
+                msg.setStandardButtons(QMessageBox.Ok)
+                retval = msg.exec_()
+                if retval == QMessageBox.Ok:
+                    self.openImageLoop()
+                else:
+                    pass
                 pass
-            pass
-        else:
-            self.imageStatus.addSnapshotRGB([
-                self.redEnter.value(),
-                self.greenEnter.value(),
-                self.blueEnter.value()
-            ],
-                [
-                    self.redOperation.currentText(),
-                    self.greenOperation.currentText(),
-                    self.blueOperation.currentText()
-                ])
-            # process red
-            if self.redOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = self.imageStatus.getColor()
-            elif self.redOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 0] <= self.redEnter.value()] = self.imageStatus.getColor()
-            elif self.redOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = self.imageStatus.getColor()
-            elif self.redOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = self.imageStatus.getColor()
             else:
-                self.imageValue[self.imageValue[:, :, 0] != self.redEnter.value()] = self.imageStatus.getColor()
-            # process green
-            if self.greenOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 1] >= self.greenEnter.value()] = self.imageStatus.getColor()
-            elif self.greenOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 1] <= self.greenEnter.value()] = self.imageStatus.getColor()
-            elif self.greenOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = self.imageStatus.getColor()
-            elif self.greenOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 1] > self.greenEnter.value()] = self.imageStatus.getColor()
-            else:
-                self.imageValue[self.imageValue[:, :, 1] != self.greenEnter.value()] = self.imageStatus.getColor()
-            # process blue
-            if self.blueOperation.currentText() == "<":
-                self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = self.imageStatus.getColor()
-            elif self.blueOperation.currentText() == ">":
-                self.imageValue[self.imageValue[:, :, 2] <= self.blueEnter.value()] = self.imageStatus.getColor()
-            elif self.blueOperation.currentText() == ">=":
-                self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = self.imageStatus.getColor()
-            elif self.blueOperation.currentText() == "<=":
-                self.imageValue[self.imageValue[:, :, 2] > self.blueEnter.value()] = self.imageStatus.getColor()
-            else:
-                self.imageValue[self.imageValue[:, :, 2] != self.blueEnter.value()] = self.imageStatus.getColor()
-            self.setImage()
+                self.imageStatus.addSnapshotRGB([
+                    self.redEnter.value(),
+                    self.greenEnter.value(),
+                    self.blueEnter.value()
+                ],
+                    [
+                        self.redOperation.currentText(),
+                        self.greenOperation.currentText(),
+                        self.blueOperation.currentText()
+                    ])
+                # process red
+                if self.redOperation.currentText() == "<":
+                    self.imageValue[self.imageValue[:, :, 0] >= self.redEnter.value()] = self.imageStatus.getColor()
+                elif self.redOperation.currentText() == ">":
+                    self.imageValue[self.imageValue[:, :, 0] <= self.redEnter.value()] = self.imageStatus.getColor()
+                elif self.redOperation.currentText() == ">=":
+                    self.imageValue[self.imageValue[:, :, 0] < self.redEnter.value()] = self.imageStatus.getColor()
+                elif self.redOperation.currentText() == "<=":
+                    self.imageValue[self.imageValue[:, :, 0] > self.redEnter.value()] = self.imageStatus.getColor()
+                else:
+                    self.imageValue[self.imageValue[:, :, 0] != self.redEnter.value()] = self.imageStatus.getColor()
+                # process green
+                if self.greenOperation.currentText() == "<":
+                    self.imageValue[self.imageValue[:, :, 1] >= self.greenEnter.value()] = self.imageStatus.getColor()
+                elif self.greenOperation.currentText() == ">":
+                    self.imageValue[self.imageValue[:, :, 1] <= self.greenEnter.value()] = self.imageStatus.getColor()
+                elif self.greenOperation.currentText() == ">=":
+                    self.imageValue[self.imageValue[:, :, 1] < self.greenEnter.value()] = self.imageStatus.getColor()
+                elif self.greenOperation.currentText() == "<=":
+                    self.imageValue[self.imageValue[:, :, 1] > self.greenEnter.value()] = self.imageStatus.getColor()
+                else:
+                    self.imageValue[self.imageValue[:, :, 1] != self.greenEnter.value()] = self.imageStatus.getColor()
+                # process blue
+                if self.blueOperation.currentText() == "<":
+                    self.imageValue[self.imageValue[:, :, 2] >= self.blueEnter.value()] = self.imageStatus.getColor()
+                elif self.blueOperation.currentText() == ">":
+                    self.imageValue[self.imageValue[:, :, 2] <= self.blueEnter.value()] = self.imageStatus.getColor()
+                elif self.blueOperation.currentText() == ">=":
+                    self.imageValue[self.imageValue[:, :, 2] < self.blueEnter.value()] = self.imageStatus.getColor()
+                elif self.blueOperation.currentText() == "<=":
+                    self.imageValue[self.imageValue[:, :, 2] > self.blueEnter.value()] = self.imageStatus.getColor()
+                else:
+                    self.imageValue[self.imageValue[:, :, 2] != self.blueEnter.value()] = self.imageStatus.getColor()
+                self.setImage()
 
     # Method for changing image in GUI
     def setImage(self):
@@ -184,16 +226,19 @@ class ImageWindow(QtWidgets.QMainWindow):
                 retval = msg.exec_()
                 if retval == QMessageBox.Ok:
                     self.imageStatus.addShanpshotImage(self.imageValue,True)
+                    self.Flag = True
                     self.redEnter.setValue(0)
                     self.blueEnter.setValue(0)
                     self.greenEnter.setValue(0)
                     self.blueOperation.setCurrentIndex(0)
                     self.greenOperation.setCurrentIndex(0)
                     self.redOperation.setCurrentIndex(0)
+                    self.Flag = False
                     self.colorButton.setStyleSheet("background-color: black");
                 else:
                     self.imageStatus.addShanpshotImage(self.imageValue, False)
                     self.RGBchange()
+                    self.imageStatus.removeDub()
             else:
                 self.imageValue = misc.imread(fileName)
                 self.imageStatus.addShanpshotImage(self.imageValue, False)
