@@ -73,16 +73,15 @@ class ImageWindow(QtWidgets.QMainWindow):
             rgb = self.imageStatus.getColor()
             self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
         else:
-            # TODO add message Box
-            print("Unable")
-        print("REDO")
-        print(self.imageStatus.currentIndex)
-        print(len(self.imageStatus.snapshots))
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Unable to redo")
+            msg.setWindowTitle("REDO error")
+            msg.setStandardButtons(QMessageBox.Ok)
+            retval = msg.exec_()
+  
     def undo(self):
-        print("UNDO")
-        print(self.imageStatus.currentIndex)
-        print(len(self.imageStatus.snapshots))
-        if self.imageStatus.setUndo() == True:
+         if self.imageStatus.setUndo() == True:
             if self.imageStatus.currentIndex == 0:
                 self.imageValue = []
                 self.image.clear()
@@ -107,12 +106,13 @@ class ImageWindow(QtWidgets.QMainWindow):
                 self.setRGB()                
                 rgb = self.imageStatus.getColor()
                 self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
-        else:
-            # TODO add message Box
-            print("Unable")
-        print("UNDO a")
-        print(self.imageStatus.currentIndex)
-        print(len(self.imageStatus.snapshots))
+         else:
+             msg = QMessageBox()
+             msg.setIcon(QMessageBox.Critical)
+             msg.setText("Unable to undo")
+             msg.setWindowTitle("UNDO error")
+             msg.setStandardButtons(QMessageBox.Ok)
+             retval = msg.exec_()
     # saving image
     def saveImage(self):
         if len(self.imageValue) == 0:
