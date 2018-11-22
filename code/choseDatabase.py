@@ -32,25 +32,16 @@ class choseDatabase(QtWidgets.QMainWindow):
         self.mainWindow.show()
         self.close()
     def choseData(self):
-        try:
-            server = mysql.connector.connect(user = self.loginEdit.toPlainText(),
-                                        password = self.passwordEdit.text(),
-                                        host = self.hostEdit.toPlainText())
-            databases = ("show databases")
-            pass_databases = []
-            cursor = server.cursor()
-            cursor.execute(databases)
-            for (databases) in cursor:
-                pass_databases.append(databases[0])
-            print(pass_databases)
-        except Exception as e:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setText("Unable to connect to MySQL server")
-            msg.setInformativeText(str(e))
-            msg.setWindowTitle("SQL error")
-            msg.setStandardButtons(QMessageBox.Ok)
-            retval = msg.exec_()
+        
+        cursor = self.server.cursor()     # get the cursor
+        print("USE " + self.comboBox.currentText())
+        cursor.execute("USE " + self.comboBox.currentText()) # select the database
+        cursor.execute("SHOW TABLES")    # execute 'SHOW TABLES' (but data is not returned)
+        #tables = cursor.fetchall() # get last query
+        for (table_name,) in cursor:
+            print(table_name)
+       
+        pass
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

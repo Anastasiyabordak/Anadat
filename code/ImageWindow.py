@@ -10,6 +10,7 @@ from scipy import misc
 import operator
 import matplotlib.pyplot as plt
 from ImageStatus import ImageStatus
+
 class ImageWindow(QtWidgets.QMainWindow):
 
     def __init__(self, mainWindow):
@@ -48,30 +49,20 @@ class ImageWindow(QtWidgets.QMainWindow):
         self.copyButton.clicked.connect(self.copyClipboard)
         self.show()
         self.setFixedSize(882, 687)
+
     def copyClipboard(self):
         height, width, channels = self.imageValue.shape
         bytesPerLine = channels * width
         qImg = QtGui.QImage(self.imageValue.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         QApplication.clipboard().setImage(qImg)
         pass
+
     def redo(self):
         print("REDO")
         print(self.imageStatus.currentIndex)
         print(len(self.imageStatus.snapshots))
         if self.imageStatus.setRedo() == True:
-            temp = self.imageStatus.getRGB()
-            self.flag = True
-            self.redEnter.setValue(temp[0])
-            self.blueEnter.setValue(temp[2])
-            self.greenEnter.setValue(temp[1])
-            self.blueOperation.setCurrentIndex(self.operations.index(temp[5]))
-            self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
-            self.redOperation.setCurrentIndex(self.operations.index(temp[3]))
-            self.flag = False
-            self.imageValue = np.copy(self.imageStatus.getImage())
-            self.setRGB()
-            rgb = self.imageStatus.getColor()
-            self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+            self.setRedoUndo()
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -93,19 +84,7 @@ class ImageWindow(QtWidgets.QMainWindow):
                 self.redOperation.setCurrentIndex(0)
                 self.colorButton.setStyleSheet("background-color: black")
             else:
-                temp = self.imageStatus.getRGB()
-                self.flag = True
-                self.redEnter.setValue(temp[0])
-                self.blueEnter.setValue(temp[2])
-                self.greenEnter.setValue(temp[1])
-                self.blueOperation.setCurrentIndex(self.operations.index(temp[5]))
-                self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
-                self.redOperation.setCurrentIndex(self.operations.index(temp[3]))
-                self.flag = False
-                self.imageValue = np.copy(self.imageStatus.getImage())
-                self.setRGB()                
-                rgb = self.imageStatus.getColor()
-                self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+                self.setRedoUndo()
          else:
              msg = QMessageBox()
              msg.setIcon(QMessageBox.Critical)
@@ -113,6 +92,20 @@ class ImageWindow(QtWidgets.QMainWindow):
              msg.setWindowTitle("UNDO error")
              msg.setStandardButtons(QMessageBox.Ok)
              retval = msg.exec_()
+    def setRedoUndo(self):
+         temp = self.imageStatus.getRGB()
+         self.flag = True
+         self.redEnter.setValue(temp[0])
+         self.blueEnter.setValue(temp[2])
+         self.greenEnter.setValue(temp[1])
+         self.blueOperation.setCurrentIndex(self.operations.index(temp[5]))
+         self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
+         self.redOperation.setCurrentIndex(self.operations.index(temp[3]))
+         self.flag = False
+         self.imageValue = np.copy(self.imageStatus.getImage())
+         self.setRGB()
+         rgb = self.imageStatus.getColor()
+         self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
     # saving image
     def saveImage(self):
         if len(self.imageValue) == 0:
@@ -172,6 +165,7 @@ class ImageWindow(QtWidgets.QMainWindow):
                         self.blueOperation.currentText()
                     ])
             self.setRGB()
+
     def setRGB(self):
         # process red
         if self.redOperation.currentText() == "<":

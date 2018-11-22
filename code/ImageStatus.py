@@ -7,36 +7,39 @@ class ImageStatus:
         self.snapshots = []
         self.snapshots.append(Snapshot())
 
-    def addSnapshotRGB(self, rgbValue, rgbOperation):
+    def removeIndex(self):
         if self.currentIndex != 0:
             self.snapshots = self.snapshots[:self.currentIndex + 1]
+
+    def appendSnapshot(self, new):
+        self.snapshots.append(new)
+        self.currentIndex = self.currentIndex + 1
+
+    def addSnapshotRGB(self, rgbValue, rgbOperation):
+        self.removeIndex()
         new = Snapshot()
         new.myCopy(self.snapshots[self.currentIndex])
         new.setRGB(rgbValue, rgbOperation)
-        self.snapshots.append(new)
-        self.currentIndex = self.currentIndex + 1
+        self.appendSnapshot(new)
+
 
     def addSnapshotColor(self, color):
-        if self.currentIndex != 0:
-            self.snapshots = self.snapshots[:self.currentIndex + 1]
+        self.removeIndex()
         new = Snapshot()
         new.myCopy(self.snapshots[self.currentIndex])
         new.setColor(color)
-        self.snapshots.append(new)
-        self.currentIndex = self.currentIndex + 1
+        self.appendSnapshot(new)
 
     # update rgb - True - reset, False - prev rgb
     def addShanpshotImage(self, image, updateRGB):
-        if self.currentIndex != 0:
-            self.snapshots = self.snapshots[:self.currentIndex + 1]
+        self.removeIndex()
         new = Snapshot()
         new.myCopy(self.snapshots[self.currentIndex])
         new.setImage(image)
         if updateRGB == True:
             new.setRGB()
             new.color = (0, 0, 0)
-        self.snapshots.append(new)
-        self.currentIndex = self.currentIndex + 1
+        self.appendSnapshot(new)
 
     def getColor(self):
         return self.snapshots[self.currentIndex].color
