@@ -15,6 +15,7 @@ class choseDatabase(QtWidgets.QMainWindow):
     def initUI(self):
         uic.loadUi("GUI/choseDatabase.ui", self)
 #get databases
+
         databases = ("show databases")
         pass_databases = []
         cursor = self.server.cursor()
@@ -34,31 +35,40 @@ class choseDatabase(QtWidgets.QMainWindow):
         self.tabWidgets = []
         self.tabs = []
         self.tableViews = []
-        print(pass_databases)
         for i in range(0,len(pass_databases)):
             page = QtWidgets.QWidget()
-            page.setGeometry(QtCore.QRect(0, 0, 461, 303))
+            page.setGeometry(QtCore.QRect(0, 0, 650, 303))
             page.setObjectName(pass_databases[i])
             self.pages.append(page)
             self.toolBox.addItem(self.pages[i], "")
             self.toolBox.setItemText(i,pass_databases[i])
             tabWidget = QtWidgets.QTabWidget(self.pages[i])
-            tabWidget.setGeometry(QtCore.QRect(0, 20, 431, 261))
+            tabWidget.setGeometry(QtCore.QRect(0, 0, 650, 400))
             tabWidget.setObjectName("tabWidget")
             self.tabWidgets.append(tabWidget)
-            tab = QtWidgets.QWidget(self.tabWidgets[i])
-            tab.setObjectName("tab")
-            self.tabs.append(tab)
-            tableView = QtWidgets.QTableView(self.tabs[i])
-            tableView.setGeometry(QtCore.QRect(20, 20, 391, 191))
-            self.tableViews.append(tableView)
-            self.tabWidgets[i].addTab(self.tabs[i], "")
-        print(self.pages)
+            cursor = self.server.cursor()     # get the cursor
+            cursor.execute("USE " + pass_databases[i]) # select the database
+            cursor.execute("SHOW TABLES")    # execute 'SHOW TABLES' (but data is not returned)
+            table_names = []
+            for (table_name,) in cursor:
+                table_names.append(table_name)
+            for j in range(0, len(table_names)):
+                tab = QtWidgets.QWidget(self.tabWidgets[i])
+                tab.setObjectName("tab")
+                self.tabs.append(tab)
+                print(table_names[j])
+                print(len(self.tabs))
+                self.tabWidgets[i].addTab(tab, table_names[j])
+                #tableView = QtWidgets.QTableView(self.tabs[i])
+                #tableView.setGeometry(QtCore.QRect(20, 20, 391, 160))
+                #self.tableViews.append(tableView)
+            print(self.tabWidgets[i].count())
         self.comboBox.addItems(pass_databases)
         self.backButton.clicked.connect(self.showMainWindow)
         self.submitButton.clicked.connect(self.choseData)
-        self.show()
         self.setFixedSize(953, 674)
+        self.show()
+
 
     # Back to main
     def showMainWindow(self):
@@ -66,12 +76,11 @@ class choseDatabase(QtWidgets.QMainWindow):
         self.mainWindow.show()
         self.close()
     def choseData(self):
-        
+
         cursor = self.server.cursor()     # get the cursor
         print("USE " + self.comboBox.currentText())
         cursor.execute("USE " + self.comboBox.currentText()) # select the database
         cursor.execute("SHOW TABLES")    # execute 'SHOW TABLES' (but data is not returned)
-        #tables = cursor.fetchall() # get last query
         table_names = []
         for (table_name,) in cursor:
             print("TABLE NAME",table_name)
@@ -81,7 +90,7 @@ class choseDatabase(QtWidgets.QMainWindow):
             cursor.execute("SHOW columns FROM " + table_name)
             print("Column names:")
             for column in cursor:
-                print(column)     
+                print(column)
         pass
 
 if __name__ == "__main__":
