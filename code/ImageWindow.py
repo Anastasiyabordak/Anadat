@@ -11,6 +11,7 @@ import operator
 import matplotlib.pyplot as plt
 from ImageStatus import ImageStatus
 
+
 class ImageWindow(QtWidgets.QMainWindow):
 
     def __init__(self, mainWindow):
@@ -18,18 +19,17 @@ class ImageWindow(QtWidgets.QMainWindow):
 
         # image in RGB888
 
+        self.operations = ['>=', '<=', '=', '<', '>']
         self.imageStatus = ImageStatus()
         self.flag = False
-        #image that displayed for user
+        # image that displayed for user
         self.imageValue = []
         self.initUI()
         self.mainWindow = mainWindow
 
-
     def initUI(self):
         uic.loadUi("GUI/image.ui", self)
 
-        self.operations = ['>=', '<=', '=', '<', '>']
         self.greenOperation.addItems(self.operations)
         self.blueOperation.addItems(self.operations)
         self.redOperation.addItems(self.operations)
@@ -61,7 +61,7 @@ class ImageWindow(QtWidgets.QMainWindow):
         print("REDO")
         print(self.imageStatus.currentIndex)
         print(len(self.imageStatus.snapshots))
-        if self.imageStatus.setRedo() == True:
+        if self.imageStatus.setRedo():
             self.setRedoUndo()
         else:
             msg = QMessageBox()
@@ -70,9 +70,9 @@ class ImageWindow(QtWidgets.QMainWindow):
             msg.setWindowTitle("REDO error")
             msg.setStandardButtons(QMessageBox.Ok)
             retval = msg.exec_()
-  
+
     def undo(self):
-         if self.imageStatus.setUndo() == True:
+        if self.imageStatus.setUndo():
             if self.imageStatus.currentIndex == 0:
                 self.imageValue = []
                 self.image.clear()
@@ -85,27 +85,29 @@ class ImageWindow(QtWidgets.QMainWindow):
                 self.colorButton.setStyleSheet("background-color: black")
             else:
                 self.setRedoUndo()
-         else:
-             msg = QMessageBox()
-             msg.setIcon(QMessageBox.Critical)
-             msg.setText("Unable to undo")
-             msg.setWindowTitle("UNDO error")
-             msg.setStandardButtons(QMessageBox.Ok)
-             retval = msg.exec_()
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Unable to undo")
+            msg.setWindowTitle("UNDO error")
+            msg.setStandardButtons(QMessageBox.Ok)
+            retval = msg.exec_()
+
     def setRedoUndo(self):
-         temp = self.imageStatus.getRGB()
-         self.flag = True
-         self.redEnter.setValue(temp[0])
-         self.blueEnter.setValue(temp[2])
-         self.greenEnter.setValue(temp[1])
-         self.blueOperation.setCurrentIndex(self.operations.index(temp[5]))
-         self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
-         self.redOperation.setCurrentIndex(self.operations.index(temp[3]))
-         self.flag = False
-         self.imageValue = np.copy(self.imageStatus.getImage())
-         self.setRGB()
-         rgb = self.imageStatus.getColor()
-         self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+        temp = self.imageStatus.getRGB()
+        self.flag = True
+        self.redEnter.setValue(temp[0])
+        self.blueEnter.setValue(temp[2])
+        self.greenEnter.setValue(temp[1])
+        self.blueOperation.setCurrentIndex(self.operations.index(temp[5]))
+        self.greenOperation.setCurrentIndex(self.operations.index(temp[4]))
+        self.redOperation.setCurrentIndex(self.operations.index(temp[3]))
+        self.flag = False
+        self.imageValue = np.copy(self.imageStatus.getImage())
+        self.setRGB()
+        rgb = self.imageStatus.getColor()
+        self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
+
     # saving image
     def saveImage(self):
         if len(self.imageValue) == 0:
@@ -136,7 +138,7 @@ class ImageWindow(QtWidgets.QMainWindow):
         rgb = (color.red(), color.green(), color.blue())
         self.imageStatus.addSnapshotColor(rgb)
         self.colorButton.setStyleSheet("QWidget { background-color: rgb(%d,%d,%d) }" % rgb)
-    
+
     # changing all RGB
     def RGBchange(self):
         self.imageValue = np.copy(self.imageStatus.getImage())
@@ -153,7 +155,7 @@ class ImageWindow(QtWidgets.QMainWindow):
                 pass
             pass
         else:
-            if self.flag == False:
+            if not self.flag:
                 self.imageStatus.addSnapshotRGB([
                     self.redEnter.value(),
                     self.greenEnter.value(),
@@ -210,7 +212,6 @@ class ImageWindow(QtWidgets.QMainWindow):
         pixmap = QPixmap(qImg)
         pixmap = pixmap.scaled(self.image.size(), QtCore.Qt.KeepAspectRatio)
         self.image.setPixmap(pixmap)
-        
 
     # Back to main
     def showMainWindow(self):
@@ -252,7 +253,7 @@ class ImageWindow(QtWidgets.QMainWindow):
                 msg.setStandardButtons(QMessageBox.No | QMessageBox.Ok)
                 retval = msg.exec_()
                 if retval == QMessageBox.Ok:
-                    self.imageStatus.addShanpshotImage(self.imageValue,True)
+                    self.imageStatus.addShanpshotImage(self.imageValue, True)
                     self.Flag = True
                     self.redEnter.setValue(0)
                     self.blueEnter.setValue(0)

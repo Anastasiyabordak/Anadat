@@ -1,9 +1,11 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
-from PyQt5.QtWidgets import QLineEdit,QMessageBox
+from PyQt5.QtWidgets import QLineEdit, QMessageBox
 import mysql.connector
 from choseDatabase import choseDatabase
+
+
 class LoginWindow(QtWidgets.QMainWindow):
 
     def __init__(self, mainWindow):
@@ -24,11 +26,12 @@ class LoginWindow(QtWidgets.QMainWindow):
         global main_ui
         self.mainWindow.show()
         self.close()
+
     def connectDatabase(self):
         try:
-            server = mysql.connector.connect(user = self.loginEdit.toPlainText(),
-                                        password = self.passwordEdit.text(),
-                                        host = self.hostEdit.toPlainText())
+            server = mysql.connector.connect(user=self.loginEdit.toPlainText(),
+                                             password=self.passwordEdit.text(),
+                                             host=self.hostEdit.toPlainText())
             global choseDatabase_ui
             choseDatabase_ui = choseDatabase(self.mainWindow, server)
             choseDatabase_ui.show()
@@ -41,6 +44,7 @@ class LoginWindow(QtWidgets.QMainWindow):
             msg.setWindowTitle("SQL error")
             msg.setStandardButtons(QMessageBox.Ok)
             retval = msg.exec_()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

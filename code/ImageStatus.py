@@ -22,7 +22,6 @@ class ImageStatus:
         new.setRGB(rgbValue, rgbOperation)
         self.appendSnapshot(new)
 
-
     def addSnapshotColor(self, color):
         self.removeIndex()
         new = Snapshot()
@@ -61,7 +60,7 @@ class ImageStatus:
         if self.currentIndex < len(self.snapshots) - 1:
             self.currentIndex = self.currentIndex + 1
             return True
-        else:            
+        else:
             return False
 
     def removeDub(self):
