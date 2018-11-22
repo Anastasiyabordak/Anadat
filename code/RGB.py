@@ -7,7 +7,7 @@ class RGB:
         self.greenOperation = operation
         self.blueOperation = operation
 
-    def setRGB(self, value=[0,0,0], operation=['>=', '>=', '>=']):
+    def setRGB(self, value=[0, 0, 0], operation=['>=', '>=', '>=']):
         self.redValue = value[0]
         self.greenValue = value[1]
         self.blueValue = value[2]

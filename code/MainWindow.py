@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QFileDialog
 from ImageWindow import ImageWindow
 from LoginWindow import LoginWindow
 
+
 class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self):

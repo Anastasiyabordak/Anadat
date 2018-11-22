@@ -48,8 +48,11 @@ class choseDatabase(QtWidgets.QMainWindow):
             tabWidget.setObjectName("tabWidget")
             self.tabWidgets.append(tabWidget)
             cursor = self.server.cursor()  # get the cursor
-            cursor.execute("USE " + pass_databases[i])  # select the database
-            cursor.execute("SHOW TABLES")  # execute 'SHOW TABLES' (but data is not returned)
+            cursor.execute("USE "
+                           + pass_databases[i])
+            # select the database
+            cursor.execute("SHOW TABLES")
+            # execute 'SHOW TABLES' (but data is not returned)
             table_names = []
             for (table_name,) in cursor:
                 table_names.append(table_name)
@@ -96,8 +99,10 @@ class choseDatabase(QtWidgets.QMainWindow):
 
         cursor = self.server.cursor()  # get the cursor
         print("USE " + self.comboBox.currentText())
-        cursor.execute("USE " + self.comboBox.currentText())  # select the database
-        cursor.execute("SHOW TABLES")  # execute 'SHOW TABLES' (but data is not returned)
+        cursor.execute("USE "
+                       + self.comboBox.currentText())  # select the database
+        cursor.execute("SHOW TABLES")
+        # execute 'SHOW TABLES' (but data is not returned)
         table_names = []
         for (table_name,) in cursor:
             print("TABLE NAME", table_name)

@@ -30,5 +30,6 @@ class Snapshot:
         self.originalImage = value
 
     def getRGB(self):
-        return [self.rgb.redValue, self.rgb.greenValue, self.rgb.blueValue,
-                self.rgb.redOperation, self.rgb.greenOperation, self.rgb.blueOperation]
+        return [self.rgb.redValue, self.rgb.greenValue,
+                self.rgb.blueValue, self.rgb.redOperation,
+                self.rgb.greenOperation, self.rgb.blueOperation]

@@ -35,7 +35,7 @@ class ImageStatus:
         new = Snapshot()
         new.myCopy(self.snapshots[self.currentIndex])
         new.setImage(image)
-        if updateRGB == True:
+        if updateRGB:
             new.setRGB()
             new.color = (0, 0, 0)
         self.appendSnapshot(new)
