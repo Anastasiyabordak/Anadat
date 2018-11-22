@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
-    <height>229</height>
+    <width>953</width>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QPushButton" name="submitButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>180</y>
-      <width>171</width>
+      <x>850</x>
+      <y>600</y>
+      <width>111</width>
       <height>41</height>
      </rect>
     </property>
@@ -39,33 +39,11 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="imageLabel">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>131</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Bitstream Charter</family>
-      <pointsize>11</pointsize>
-      <weight>50</weight>
-      <italic>true</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Chose database</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="backButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>180</y>
+      <x>860</x>
+      <y>190</y>
       <width>71</width>
       <height>41</height>
      </rect>
@@ -89,10 +67,10 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>40</y>
-      <width>221</width>
-      <height>41</height>
+      <x>880</x>
+      <y>310</y>
+      <width>71</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">

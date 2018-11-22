@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtWidgets, QtGui
+from PyQt5 import QtWidgets, QtGui,QtCore
 from PyQt5 import uic
 from PyQt5.QtWidgets import QLineEdit,QMessageBox
 import mysql.connector
@@ -14,17 +14,51 @@ class choseDatabase(QtWidgets.QMainWindow):
 
     def initUI(self):
         uic.loadUi("GUI/choseDatabase.ui", self)
+#get databases
         databases = ("show databases")
         pass_databases = []
         cursor = self.server.cursor()
         cursor.execute(databases)
         for (databases) in cursor:
             pass_databases.append(databases[0])
+        font = QtGui.QFont()
+        font.setFamily("Bitstream Charter")
+        font.setPointSize(18)
+        font.setItalic(True)
+
+        self.toolBox = QtWidgets.QToolBox(self.centralwidget)
+        self.toolBox.setGeometry(QtCore.QRect(0, 0, 650, 640))
+        self.toolBox.setObjectName("toolBox")
+        self.toolBox.setFont(font)
+        self.pages = []
+        self.tabWidgets = []
+        self.tabs = []
+        self.tableViews = []
+        print(pass_databases)
+        for i in range(0,len(pass_databases)):
+            page = QtWidgets.QWidget()
+            page.setGeometry(QtCore.QRect(0, 0, 461, 303))
+            page.setObjectName(pass_databases[i])
+            self.pages.append(page)
+            self.toolBox.addItem(self.pages[i], "")
+            self.toolBox.setItemText(i,pass_databases[i])
+            tabWidget = QtWidgets.QTabWidget(self.pages[i])
+            tabWidget.setGeometry(QtCore.QRect(0, 20, 431, 261))
+            tabWidget.setObjectName("tabWidget")
+            self.tabWidgets.append(tabWidget)
+            tab = QtWidgets.QWidget(self.tabWidgets[i])
+            tab.setObjectName("tab")
+            self.tabs.append(tab)
+            tableView = QtWidgets.QTableView(self.tabs[i])
+            tableView.setGeometry(QtCore.QRect(20, 20, 391, 191))
+            self.tableViews.append(tableView)
+            self.tabWidgets[i].addTab(self.tabs[i], "")
+        print(self.pages)
         self.comboBox.addItems(pass_databases)
         self.backButton.clicked.connect(self.showMainWindow)
         self.submitButton.clicked.connect(self.choseData)
         self.show()
-        self.setFixedSize(542, 277)
+        self.setFixedSize(953, 674)
 
     # Back to main
     def showMainWindow(self):
