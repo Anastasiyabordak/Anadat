@@ -38,9 +38,16 @@ class choseDatabase(QtWidgets.QMainWindow):
         cursor.execute("USE " + self.comboBox.currentText()) # select the database
         cursor.execute("SHOW TABLES")    # execute 'SHOW TABLES' (but data is not returned)
         #tables = cursor.fetchall() # get last query
+        table_names = []
         for (table_name,) in cursor:
-            print(table_name)
-       
+            print("TABLE NAME",table_name)
+            table_names.append(table_name)
+        for table_name in table_names:
+            print("TABLE NAME",table_name)
+            cursor.execute("SHOW columns FROM " + table_name)
+            print("Column names:")
+            for column in cursor:
+                print(column)     
         pass
 
 if __name__ == "__main__":
