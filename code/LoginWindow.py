@@ -1,8 +1,8 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
-from PyQt5.QtWidgets import QLineEdit
-
+from PyQt5.QtWidgets import QLineEdit,QMessageBox
+import mysql.connector
 
 class LoginWindow(QtWidgets.QMainWindow):
 
@@ -25,10 +25,23 @@ class LoginWindow(QtWidgets.QMainWindow):
         self.mainWindow.show()
         self.close()
     def connectDatabase(self):
-        print(self.loginEdit.toPlainText())
-        print(self.passwordEdit.toPlainText())
-        print(self.hostEdit.toPlainText())
-
+        try:
+            server = mysql.connector.connect(user = self.loginEdit.toPlainText(),
+                                        password = self.passwordEdit.text(),
+                                        host = self.hostEdit.toPlainText())
+            databases = ("show databases")
+            cursor = server.cursor()
+            cursor.execute(databases)
+            for (databases) in cursor:
+                print (databases[0])
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Unable to connect to MySQL server")
+            msg.setInformativeText(str(e))
+            msg.setWindowTitle("SQL error")
+            msg.setStandardButtons(QMessageBox.Ok)
+            retval = msg.exec_()
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     global ex

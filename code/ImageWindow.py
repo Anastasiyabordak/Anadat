@@ -236,8 +236,6 @@ class ImageWindow(QtWidgets.QMainWindow):
             msg.setStandardButtons(QMessageBox.Close | QMessageBox.Ok)
             retval = msg.exec_()
             if retval == QMessageBox.Ok:
-                # TODO new image - clean rgb
-                # TODO add to snapshot
                 self.openImageLoop()
             else:
                 pass

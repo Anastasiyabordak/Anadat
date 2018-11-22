@@ -144,6 +144,9 @@
     <property name="verticalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
+    <property name="placeholderText">
+     <string>localhost</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="backButton">
     <property name="geometry">
@@ -170,7 +173,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="passwordEdit">
     <property name="geometry">
      <rect>
       <x>200</x>
