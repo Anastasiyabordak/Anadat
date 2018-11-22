@@ -3,19 +3,26 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
 from PyQt5.QtWidgets import QLineEdit,QMessageBox
 import mysql.connector
-from choseDatabase import choseDatabase
-class LoginWindow(QtWidgets.QMainWindow):
 
-    def __init__(self, mainWindow):
+class choseDatabase(QtWidgets.QMainWindow):
+
+    def __init__(self, mainWindow,server):
         super().__init__()
         self.mainWindow = mainWindow
+        self.server= server
         self.initUI()
 
     def initUI(self):
-        uic.loadUi("GUI/login.ui", self)
+        uic.loadUi("GUI/choseDatabase.ui", self)
+        databases = ("show databases")
+        pass_databases = []
+        cursor = self.server.cursor()
+        cursor.execute(databases)
+        for (databases) in cursor:
+            pass_databases.append(databases[0])
+        self.comboBox.addItems(pass_databases)
         self.backButton.clicked.connect(self.showMainWindow)
-        self.passwordEdit.setEchoMode(QLineEdit.Password)
-        self.submitButton.clicked.connect(self.connectDatabase)
+        self.submitButton.clicked.connect(self.choseData)
         self.show()
         self.setFixedSize(542, 277)
 
@@ -24,15 +31,18 @@ class LoginWindow(QtWidgets.QMainWindow):
         global main_ui
         self.mainWindow.show()
         self.close()
-    def connectDatabase(self):
+    def choseData(self):
         try:
             server = mysql.connector.connect(user = self.loginEdit.toPlainText(),
                                         password = self.passwordEdit.text(),
                                         host = self.hostEdit.toPlainText())
-            global choseDatabase_ui
-            choseDatabase_ui = choseDatabase(self.mainWindow, server)
-            choseDatabase_ui.show()
-            self.close()
+            databases = ("show databases")
+            pass_databases = []
+            cursor = server.cursor()
+            cursor.execute(databases)
+            for (databases) in cursor:
+                pass_databases.append(databases[0])
+            print(pass_databases)
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
