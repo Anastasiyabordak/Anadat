@@ -11,7 +11,7 @@
 | 6 | Установка соединения| |Открыть приложение "Anadat". Нажать на "Transform image", ввести логин "anastasiya", пароль "asiaf"| Отображены данные|Отображены данные| PASS |
 | 7 |Просмотр данных|Открыть приложение "Anadat". Нажать на "Transform image", ввести логин "anastasiya", пароль "asiaf" | Структура схем отображена корректно|Структура схем отображена корректно| PASS |
 | 8 | Копирование графика в буфер|Открыть приложение "Anadat". Нажать на "Transform image", ввести логин "anastasiya", пароль "asiaf", на схеме "new_schema" клик на id выбор оси ординат, клик на temp, выбор оси абсцисс. Нажать кнопку "Submit" | | | PASS |
-| 9 | Сохранение графика | |![graphs.png] (https://github.com/Anastasiyabordak/Anadat/blob/master/graphs.png) | ![graphs.png] (https://github.com/Anastasiyabordak/Anadat/blob/master/graphs.png)| PASS |
+| 9 | Сохранение графика | | ![graphs.png](https://github.com/Anastasiyabordak/Anadat/blob/master/graphs.png) | ![graphs.png] (https://github.com/Anastasiyabordak/Anadat/blob/master/graphs.png)| PASS |
 | 10 | Производительность | |Все действия завершены успешно | Все действия завершены успешно | pass |
 | 11 | Расширяемость | Невозможно протестировать, так как в данный момент доступна только одна версия приложения | - | - | - |
 | 12 | Взаимодействие | Невозможно проткстировать, так как приложение не взаимодействует с другими | - | - | - |
