@@ -3,7 +3,7 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5 import uic
 from PyQt5.QtWidgets import QLineEdit, QMessageBox
 import mysql.connector
-
+from buildChart import buildChart
 
 class choseDatabase(QtWidgets.QMainWindow):
 
@@ -81,20 +81,38 @@ class choseDatabase(QtWidgets.QMainWindow):
         self.show()
 
     def sendData(self):
-        if len(self.xData) != len(self.yData):
+
+        if len(self.xData) != len(self.yData) and len(x.Data) == 1:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
             msg.setText("Can't create plot, check len")
             msg.setWindowTitle("ERROR")
             msg.setStandardButtons(QMessageBox.Close)
             retval = msg.exec_()
+        else:
+            global chart_ui
+            chart_ui = buildChart(self.mainWindow,self.getNormalData(self.xData),self.getNormalData(self.yData))
+            chart_ui.show()
+            self.close()
 
+    def getNormalData(self, type):
+        r_data = []
+        for i in type:
+            cursor = self.server.cursor()  # get the cursor
+            cursor.execute("USE "
+                           + i[2])
+            cursor.execute("SELECT " + i[0] + " FROM " + i[1])
+            temp = []
+            for i in cursor:
+                temp.append(i[0])
+            r_data.append(temp)
+        return r_data
     def itemClickedList(self, item):
         cwidget = self.sender().parent()
         listCTD = []
 
         listCTD.append(item.text().split(' ')[0])
-        if 'decimal' in item.text().split(' ')[2] or 'int' in item.text().split(' ')[2]:
+        if  'int' in item.text().split(' ')[2]:
             for i in range(0, len(self.tabs)):
                 if self.tabs[i] is cwidget:
                     listCTD.append(self.allTabsName[i])
@@ -117,7 +135,7 @@ class choseDatabase(QtWidgets.QMainWindow):
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
-            msg.setText("Can't create plot, check type")
+            msg.setText("Can't create plot, check type: int")
             msg.setWindowTitle("ERROR")
             msg.setStandardButtons(QMessageBox.Close)
             retval = msg.exec_()
@@ -128,10 +146,3 @@ class choseDatabase(QtWidgets.QMainWindow):
         self.mainWindow.show()
         self.close()
 
-
-if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    global ex
-    ex = MainWindow()
-    a = app.exec_()
-    sys.exit(a)

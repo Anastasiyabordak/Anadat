@@ -220,23 +220,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>630</y>
-      <width>201</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Bitstream Charter</family>
-      <pointsize>18</pointsize>
-      <italic>true</italic>
-     </font>
-    </property>
-   </widget>
   </widget>
  </widget>
  <resources/>

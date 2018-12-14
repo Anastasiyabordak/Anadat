@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5 import uic
 from PyQt5.QtWidgets import QLineEdit, QMessageBox
 import mysql.connector
+from MainWindow import MainWindow
 from choseDatabase import choseDatabase
 
 
